@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Calculator</title>
+</head>
+<body>
+    <div class="container">
+        <div class="display">
+            <input id="screen" type="text" placeholder="0">
+            <input id="ansscreen" type="text" placeholder="">
+        </div>
+
+        <div class="btns">
+            <div class="row">
+                <button class="btn" onclick="showVar()">VARS</button>
+                <button class="btn" value="^">x <span style="position: relative; bottom: .4em; right: .1em;">y</span></button>
+                <button class="btn" value="(">(</button>
+                <button class="btn" value=")">)</button>
+                <button id="ce" onclick="backspc()">CE</button>
+                <button id="ac" onclick="screen.value='', ansscreen.value=''">AC</button>
+            </div>
+
+            <div class="row">
+                <button class="btn" value="sin(">sin</button>
+                <button class="btn" value="e">e</button>
+                <button class="btn" value="7">7</button>
+                <button class="btn" value="8">8</button>
+                <button class="btn" value="9">9</button>
+                <button class="btn" value="/">÷</button>
+            </div>
+
+            <div class="row">
+                <button class="btn" value="cos(">cos</button>
+                <button class="btn" value="π">π</button>
+                <button class="btn" value="4">4</button>
+                <button class="btn" value="5">5</button>
+                <button class="btn" value="6">6</button>
+                <button class="btn" value="*">×</button>
+            </div>
+
+            <div class="row">
+                <button class="btn" value="tan(">tan</button>
+                <button class="btn" value="sqrt(">√</button>
+                <button class="btn" value="1">1</button>
+                <button class="btn" value="2">2</button>
+                <button class="btn" value="3">3</button>
+                <button class="btn" value="-">-</button>
+            </div>
+
+            <div class="row">
+                <button style="width: 135px;" onclick="history()">Histroy</button>
+                <button class="btn" value="0">0</button>
+                <button class="btn" value=".">.</button>
+                <button id="evaluate" onclick="solve()">=</button>
+                <button class="btn" value="+">+</button>
+            </div>
+        </div>
+    </div>   
+    <div class="var-create">
+        <div class="display-var">
+            <input id="error" type="text" style="display: none;">
+            <input id="varkey" type="text" onclick="showErrorInput()" placeholder="Var Name">
+            <input id="varvalue" type="text" onclick="showErrorInput()" placeholder="Var Value">
+            <button id="varbtn" style="width: 135px;" onclick="createVar()">Create</button>
+            <div class="show-var"></div>
+        </div>
+    </div> 
+    <div class="var-history">
+        <h1>History:</h1>
+        <div class="memory"></div>
+      </div>
+</body>
+<script src="custom.js"></script> 
+<script src="parser.js"></script>
+</html>
