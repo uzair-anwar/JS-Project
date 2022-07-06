@@ -1,8 +1,11 @@
+//Parser Function
 function evaluate(expression) {
     let tokens = expression.split("");
     let values = [];
     let ops = [];
     for (let i = 0; i < tokens.length; i++) {
+      //debugger
+      console.log(tokens[i]+"Anwa")
       if (tokens[i] == " ") {
         continue;
       }
@@ -17,7 +20,7 @@ function evaluate(expression) {
       } else if (tokens[i] == "(") {
         ops.push(tokens[i]);
       } else if (tokens[i] == ")") {
-        while (ops[ops.length - 1] != "(") {
+        while (ops[ops.length-1] != "(") {
           values.push(applyOp(ops.pop(), values.pop(), values.pop()));
         }
         ops.pop();
@@ -70,13 +73,14 @@ function evaluate(expression) {
     }
     while (ops.length > 0) {
       let getOp = ops.pop();
+      if(getOp!=undefined){
       ops.push(getOp);
       if (getOp != "cos" && getOp != "sin" && getOp != "tan" && getOp != "sqrt") {
         values.push(applyOp(ops.pop(), values.pop(), values.pop()));
       } else {
         let newPushvalue = applyUnOp(ops.pop(), values.pop());
         values.push(newPushvalue);
-      }
+      }}
     }
     return values.pop();
   }
@@ -90,6 +94,7 @@ function evaluate(expression) {
       return true;
     }
   }
+//function for binary operation
 function applyOp(op, b, a) {
     switch (op) {
       case "+":
@@ -108,6 +113,7 @@ function applyOp(op, b, a) {
     }
     return "NaN";
   }
+  //function for Uniary operation
   function applyUnOp(op, b) {
     switch (op) {
       case "cos":
@@ -121,3 +127,4 @@ function applyOp(op, b, a) {
     }
     return "NaN";
   }
+console.log(evaluate("(5+2)"))
