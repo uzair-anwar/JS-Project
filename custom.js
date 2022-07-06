@@ -9,7 +9,6 @@ var showError=false;
 var historybtn=false;
 var showvarbtn=false;
 var variables=new Map();
-var extraS=""
 /*============ For getting the value of btn, Here we use for loop ============*/
 for (item of btn) {
     item.addEventListener('click', (e) => {
@@ -32,9 +31,13 @@ function solve(){
     const E="2.7182";
     ans_screen.value=""
     var expression=screen.value;
+
     for (const [key, value] of variables) {
         let re = new RegExp(`\\b${key}\\b`, "gi");
         expression=expression.replace(key,value)  
+    }
+    if(expression.includes("eπ") || expression.includes("πe")){
+        throw new Error("NaN")
     }
     expression=expression.replace("π",PI)
     expression=expression.replace("e",E);
@@ -44,7 +47,7 @@ function solve(){
     {
         throw new Error("Infinity");
     }
-    else if(result.toString()=="NaN"){
+    else if(result.toString()=="NaN" || result=="Error"){
         throw new Error("NaN")
     }
         
@@ -60,7 +63,7 @@ function solve(){
     </div>`;
     } catch (Exception) {
         if(Exception.message=="Infinity")
-            ans_screen.value="Second nunber is zero";
+            ans_screen.value="Second number is zero";
         else
             ans_screen.value="Expression is not valid";
     }
@@ -71,7 +74,7 @@ function createVar(){
     let key=document.getElementById("varkey").value;
     let targetvalue=document.getElementById("varvalue").value;
     try{
-        if(!isNaN(key)){
+        if(!isNaN(key) && key!=""){
             throw new Error("Key can not be a Number")
         }
 

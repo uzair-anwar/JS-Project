@@ -1,11 +1,10 @@
 //Parser Function
 function evaluate(expression) {
+  try{
     let tokens = expression.split("");
     let values = [];
     let ops = [];
     for (let i = 0; i < tokens.length; i++) {
-      //debugger
-      console.log(tokens[i]+"Anwa")
       if (tokens[i] == " ") {
         continue;
       }
@@ -20,7 +19,7 @@ function evaluate(expression) {
       } else if (tokens[i] == "(") {
         ops.push(tokens[i]);
       } else if (tokens[i] == ")") {
-        while (ops[ops.length-1] != "(") {
+        while (ops[ops.length-1] != "(" && ops.length!=0) {
           values.push(applyOp(ops.pop(), values.pop(), values.pop()));
         }
         ops.pop();
@@ -54,7 +53,7 @@ function evaluate(expression) {
             i--;
           }
         } else {
-          while (ops.length > 0 && hasPrecedence(tokens[i], ops[ops.length - 1])) 
+          while (ops.length > 0 &&values.length>1 && hasPrecedence(tokens[i], ops[ops.length - 1])) 
           {
             values.push(applyOp(ops.pop(), values.pop(), values.pop()));
           }
@@ -82,7 +81,14 @@ function evaluate(expression) {
         values.push(newPushvalue);
       }}
     }
+    if(values.length==1)
     return values.pop();
+    else
+    return "Error"
+  }
+  catch(Exception){
+    return "Error"
+  }
   }
   function hasPrecedence(op1, op2) {
     if (op2 == "(" || op2 == ")") {
@@ -127,4 +133,4 @@ function applyOp(op, b, a) {
     }
     return "NaN";
   }
-console.log(evaluate("(5+2)"))
+
