@@ -85,11 +85,11 @@ function createVariable() {
   let key = document.getElementById("variable-key").value;
   let targetValue = document.getElementById("variable-value").value;
   try {
-    if (!isNaN(key) && key != "") {
+    if (key == "" || targetValue == "") {
+        errorSection.style.display = "block";
+        document.getElementById("error").value = "Fields are empty";
+    } else if (!isNaN(key)) {
       throw new Error("Key can not be a Number");
-    } else if (key == "" && targetValue == "") {
-      errorSection.style.display = "block";
-      document.getElementById("error").value = "Fields are empty";
     } else if (isNaN(targetValue)) {
       throw new Error("Value is not a Number");
     } else if (
