@@ -27,3 +27,9 @@ Built with
 How to run ?
 
     To run this application , you simply clone project or run html file 
+    
+Deployement
+
+    This is also deploy on netlify , you can also use this Calculator by using the link given below
+    Link:
+        https://zesty-cuchufli-be0c11.netlify.app
