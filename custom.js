@@ -36,8 +36,8 @@ function solve() {
     const PI = "3.1415";
     const E = "2.7182";
     outputValue.value = "";
+    debugger
     var expression = inputValue.value;
-
     if (expression.length == 0) {
       throw new Error("Empty");
     }
@@ -51,8 +51,11 @@ function solve() {
     let dynamicRegE = new RegExp(`\\b${"e"}\\b`, "gi");
     expression = expression.replace("π", PI);
     expression = expression.replace(dynamicRegE, E);
-    if (/[a-z]/i.test(expression) && /[A-Z]/i.test(expression)) {
-      throw new Exception("NaN");
+    if(!expression.includes("sin") || !expression.includes("cos") || !expression.includes("tan") || !expression.includes("sqrt")){
+      let tempExpression=expression.replace('sin','').replace('cos','').replace('tan','').replace('sqrt','')
+      if (/[a-z]/i.test(tempExpression) && /[A-Z]/i.test(tempExpression)) {
+        throw new Exception("NaN");
+      }
     }
     result = evaluate(expression);
     if (result == "Infinity") {
