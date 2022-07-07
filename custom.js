@@ -197,3 +197,4 @@ function showVariables() {
 function showErrorInput() {
   errorSection.style.display = "none";
 }
+
