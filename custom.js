@@ -9,11 +9,12 @@ let showError = false;
 let historyButton = false;
 let showVarBtn = false;
 let variables = new Map();
+
 /*============ For getting the value of btn, Here we use for loop ============*/
 for (item of button) {
   item.addEventListener("click", (e) => {
-    btntext = e.target.value;
-    inputValue.value += btntext;
+    btnText = e.target.value;
+    inputValue.value += btnText;
     e.target.blur();
     inputValue.focus();
   });
@@ -33,39 +34,47 @@ function backSpace() {
 //function for solving equation
 function solve() {
   try {
-    const PI = "3.1415";
-    const E = "2.7182";
+    const PI = 3.1415;
+    const E = 2.7182;
     outputValue.value = "";
-    debugger
     var expression = inputValue.value;
     if (expression.length == 0) {
       throw new Error("Empty");
     }
     for (const [key, value] of variables) {
-      let dynamicReg = new RegExp(`\\b${key}\\b`, "gi");
-      expression = expression.replace(dynamicReg, value);
+      let varRegExp = new RegExp(`\\b${key}\\b`, "gi");
+      expression = expression.replace(varRegExp, value);
     }
     if (expression.includes("eπ") || expression.includes("πe")) {
       throw new Error("NaN");
     }
-    let dynamicRegE = new RegExp(`\\b${"e"}\\b`, "gi");
-    expression = expression.replace("π", PI);
-    expression = expression.replace(dynamicRegE, E);
-    if(!expression.includes("sin") || !expression.includes("cos") || !expression.includes("tan") || !expression.includes("sqrt")){
-      let tempExpression=expression.replace('sin','').replace('cos','').replace('tan','').replace('sqrt','')
-      if (/[a-z]/i.test(tempExpression) && /[A-Z]/i.test(tempExpression)) {
+    let eulerRegExp = new RegExp(`\\b${"e"}\\b`, "gi");
+    expression = expression.replace("π", PI.toString());
+    expression = expression.replace(eulerRegExp, E.toString());
+    if (
+      !expression.includes("sin") ||
+      !expression.includes("cos") ||
+      !expression.includes("tan") ||
+      !expression.includes("sqrt")
+    ) {
+      let tempExpression = expression
+        .replace("sin", "")
+        .replace("cos", "")
+        .replace("tan", "")
+        .replace("sqrt", "");
+      if (/[a-z]/i.test(tempExpression) || /[A-Z]/i.test(tempExpression)) {
         throw new Exception("NaN");
       }
     }
     result = evaluate(expression);
     if (result == "Infinity") {
       throw new Error("Infinity");
-    } else if (result.toString() == "NaN" || result == "Error") {
+    } else if (result.toString() == "NaN" || result == "Invalid Expression") {
       throw new Error("NaN");
     }
 
-    finalResult = parseFloat(result);
-    finalResult = Math.round(finalResult * 10000) / 10000;
+    const tempResult = parseFloat(result);
+    const finalResult = Math.round(tempResult * 10000) / 10000;
     outputValue.value = finalResult;
 
     history_element.innerHTML += `
@@ -89,8 +98,8 @@ function createVariable() {
   let targetValue = document.getElementById("variable-value").value;
   try {
     if (key == "" || targetValue == "") {
-        errorSection.style.display = "block";
-        document.getElementById("error").value = "Fields are empty";
+      errorSection.style.display = "block";
+      document.getElementById("error").value = "Fields are empty";
     } else if (!isNaN(key)) {
       throw new Error("Key can not be a Number");
     } else if (isNaN(targetValue)) {

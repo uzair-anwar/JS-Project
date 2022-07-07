@@ -8,58 +8,78 @@ function evaluate(expression) {
       if (tokens[i] == " ") {
         continue;
       }
-      debugger
       if (tokens[i] >= "0" && tokens[i] <= "9") {
-        let sbuf = "";
-        while (i < tokens.length && ((tokens[i] >= "0" && tokens[i] <= "9") || tokens[i] == ".")
+        let tempDigit = "";
+        while (
+          i < tokens.length &&
+          ((tokens[i] >= "0" && tokens[i] <= "9") || tokens[i] == ".")
         ) {
-          sbuf = sbuf + tokens[i++];
+          tempDigit = tempDigit + tokens[i++];
         }
-        values.push(parseFloat(sbuf));
+        values.push(parseFloat(tempDigit));
         i--;
       } else if (tokens[i] == "(") {
         operators.push(tokens[i]);
       } else if (tokens[i] == ")") {
         if (!operators.includes("(")) {
-          throw new Exception()
+          throw new Exception();
         }
-        while (operators[operators.length - 1] != "(" && operators.length != 0) {
+        while (
+          operators[operators.length - 1] != "(" &&
+          operators.length != 0
+        ) {
           values.push(applyOp(operators.pop(), values.pop(), values.pop()));
         }
         operators.pop();
         let getOp = operators.pop();
-        // if (getOp == undefined) {
-        //   throw new Exception()
-        // }
         operators.push(getOp);
-        if (getOp == "cos" || getOp == "sin" || getOp == "tan" || getOp == "sqrt") {
+        if (
+          getOp == "cos" ||
+          getOp == "sin" ||
+          getOp == "tan" ||
+          getOp == "sqrt"
+        ) {
           let newPushvalue = applyUnOp(operators.pop(), values.pop());
           values.push(newPushvalue);
         }
-      }
-      else if (tokens[i] == "+" || tokens[i] == "-" || tokens[i] == "*" || tokens[i] == "/") {
+      } else if (
+        tokens[i] == "+" ||
+        tokens[i] == "-" ||
+        tokens[i] == "*" ||
+        tokens[i] == "/"
+      ) {
         if (i == 0 && (tokens[i] == "-" || tokens[i] == "+")) {
-          let sbuf = tokens[i];
+          let tempDigit = tokens[i];
           i++;
           if (tokens[i] >= "0" && tokens[i] <= "9") {
-            while (i < tokens.length && ((tokens[i] >= "0" && tokens[i] <= "9") || tokens[i] == ".")) {
-              sbuf = sbuf + tokens[i++];
+            while (
+              i < tokens.length &&
+              ((tokens[i] >= "0" && tokens[i] <= "9") || tokens[i] == ".")
+            ) {
+              tempDigit = tempDigit + tokens[i++];
             }
-            values.push(parseFloat(sbuf));
+            values.push(parseFloat(tempDigit));
             i--;
           }
         } else if (i != 0 && (tokens[i - 1] == "+" || tokens[i - 1] == "-")) {
-          let sbuf = tokens[i];
+          let tempDigit = tokens[i];
           i++;
           if (tokens[i] >= "0" && tokens[i] <= "9") {
-            while (i < tokens.length && ((tokens[i] >= "0" && tokens[i] <= "9") || tokens[i] == ".")) {
-              sbuf = sbuf + tokens[i++];
+            while (
+              i < tokens.length &&
+              ((tokens[i] >= "0" && tokens[i] <= "9") || tokens[i] == ".")
+            ) {
+              tempDigit = tempDigit + tokens[i++];
             }
-            values.push(parseFloat(sbuf));
+            values.push(parseFloat(tempDigit));
             i--;
           }
         } else {
-          while (operators.length > 0 && values.length > 1 && hasPrecedence(tokens[i], operators[operators.length - 1])) {
+          while (
+            operators.length > 0 &&
+            values.length > 1 &&
+            hasPrecedence(tokens[i], operators[operators.length - 1])
+          ) {
             values.push(applyOp(operators.pop(), values.pop(), values.pop()));
           }
           operators.push(tokens[i]);
@@ -79,7 +99,12 @@ function evaluate(expression) {
       let getOp = operators.pop();
       if (getOp != undefined) {
         operators.push(getOp);
-        if (getOp != "cos" && getOp != "sin" && getOp != "tan" && getOp != "sqrt") {
+        if (
+          getOp != "cos" &&
+          getOp != "sin" &&
+          getOp != "tan" &&
+          getOp != "sqrt"
+        ) {
           values.push(applyOp(operators.pop(), values.pop(), values.pop()));
         } else {
           let newPushvalue = applyUnOp(operators.pop(), values.pop());
@@ -87,15 +112,14 @@ function evaluate(expression) {
         }
       }
     }
-    if (values.length == 1)
-      return values.pop();
-    else
-      return "Error"
-  }
-  catch (Exception) {
-    return "Error"
+    if (values.length == 1) return values.pop();
+    else return "Invalid Expression";
+  } catch (Exception) {
+    return "Invalid Expression";
   }
 }
+
+//function to chech precedence
 function hasPrecedence(op1, op2) {
   if (op2 == "(" || op2 == ")") {
     return false;
@@ -106,6 +130,7 @@ function hasPrecedence(op1, op2) {
     return true;
   }
 }
+
 //function for binary operation
 function applyOp(op, b, a) {
   switch (op) {
@@ -125,6 +150,7 @@ function applyOp(op, b, a) {
   }
   return "NaN";
 }
+
 //function for Uniary operation
 function applyUnOp(op, b) {
   switch (op) {

@@ -91,19 +91,38 @@ body {
   box-shadow: inset 5px 5px 8px #e60073, inset 5px 5px 8px #ff3399;
 }
 
+.power {
+  position: relative;
+  bottom: 0.4em;
+  right: 0.1em;
+}
+
+.histroy-btn {
+  width: 135px;
+}
+
 .display-var {
   width: 300px !important;
 }
+
 .var-history {
   display: none;
 }
+
 .memory {
   height: 100% !important;
 }
+
 .show-var {
   display: none;
 }
+
 #error {
   color: red;
   font-size: Medium;
+  display: none;
+}
+
+#varbtn {
+  width: 135px !important;
 }

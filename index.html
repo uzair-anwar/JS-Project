@@ -24,16 +24,12 @@
           <button class="btn" onclick="showVariables()">VARS</button>
           <button class="btn" value="^">
             x
-            <span style="position: relative; bottom: 0.4em; right: 0.1em"
-              >y</span
-            >
+            <span class="power">y</span>
           </button>
           <button class="btn" value="(">(</button>
           <button class="btn" value=")">)</button>
           <button id="ce" onclick="backSpace()">CE</button>
-          <button id="ac" onclick=remove()>
-            AC
-          </button>
+          <button id="ac" onclick="remove()">AC</button>
         </div>
 
         <div class="row">
@@ -64,7 +60,7 @@
         </div>
 
         <div class="row">
-          <button style="width: 135px" onclick="showHistory()">Histroy</button>
+          <button id="varbtn" onclick="showHistory()">Histroy</button>
           <button class="btn" value="0">0</button>
           <button class="btn" value=".">.</button>
           <button id="evaluate" onclick="solve()">=</button>
@@ -74,7 +70,7 @@
     </div>
     <div class="var-create">
       <div class="display-var">
-        <input id="error" type="text" style="display: none" />
+        <input id="error" type="text" />
         <input
           id="variable-key"
           type="text"
@@ -87,9 +83,7 @@
           onclick="showErrorInput()"
           placeholder="Var Value"
         />
-        <button id="varbtn" style="width: 135px" onclick="createVariable()">
-          Create
-        </button>
+        <button id="varbtn" onclick="createVariable()">Create</button>
         <div class="show-var"></div>
       </div>
     </div>
